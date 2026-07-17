@@ -50,10 +50,6 @@ class PatientManager {
         //code for editing patients
     }
 
-    public void SearchPatient() {
-        //code for searching patients by ID and returns Patient
-    }
-
     public void DisplayMedicalRecordList(Patient patient)
     {
         Console.Clear();
