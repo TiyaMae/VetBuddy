@@ -7,7 +7,7 @@ class VaccineRecord : MedicalRecord {
     private string Dose;
     private string NextDue; //add vaccine reminders
 
-    public VaccineRecord (int _recid,string _date,string _diag,string _notes,string _vaccname,string _dose,string _nextdue) 
+    public VaccineRecord (int _recid,string _date, string _diag,string _notes,string _vaccname,string _dose,string _nextdue) 
     : base( _recid, _date, _diag, _notes) {
         vaccname = _vaccname; dose = _dose; nextdue = _nextdue;
     }
@@ -36,7 +36,18 @@ class VaccineRecord : MedicalRecord {
         }
     }
 
-    public override void DisplayRecord() {
-        //Vaccine Record Output
+    public override void DisplayRecord()
+    { //make parent print inherited information
+        LoginManager vet = new LoginManager();
+
+        Console.WriteLine("====== CHECK UP RECORD =====");
+        Console.WriteLine($"Record ID: {recordID}"); //temporary
+        Console.WriteLine($"Date: {date}");
+        Console.WriteLine($"Vet: {vet.vetName}");
+        Console.WriteLine($"Vaccine name: {vaccname}");
+        Console.WriteLine($"Dose: {dose}");
+        Console.WriteLine($"Next due date: {nextdue}");
+        Console.WriteLine($"Diagnosis: "); //remove
+        Console.WriteLine($"Notes (200 characters): {notes}");
     }
 }

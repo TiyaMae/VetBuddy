@@ -27,9 +27,13 @@ class SurgeryRecord : MedicalRecord {
         }
     }
 
-    public override void DisplayRecord() {
+    public override void DisplayRecord() 
+    { //make parent print inherited information
+        LoginManager vet = new LoginManager();
+
         Console.WriteLine($"ID: {recordID}"); //temporary
         Console.WriteLine($"Date: {date}");
+        Console.WriteLine($"Vet: {vet.vetName}");
         Console.WriteLine($"Weight (kg): ");
         Console.WriteLine($"Temperature (Celsius): ");
         Console.WriteLine($"Diagnosis: ");

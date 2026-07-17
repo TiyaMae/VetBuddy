@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Collections;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 class MenuManager
 {   
@@ -28,6 +29,7 @@ class MenuManager
             if (loginManager.LoginAuth(inEmail, inPass))
             {
                 Console.Clear();
+                Console.WriteLine("Login successful! Welcome...");
                 Console.ReadKey();
 
                 break;
@@ -44,7 +46,7 @@ class MenuManager
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("1. Add Patient\n2. display patient 2\n3. opt 3");
+            Console.WriteLine("1. Add Patient\n2. display patient\n3. opt 3");
 
             int input = int.Parse(Console.ReadLine());
 
@@ -73,7 +75,7 @@ class MenuManager
         {
             Console.Clear();
             Console.WriteLine("Enter patient information:");
-            Console.Write("ID: "); //temporary
+            Console.Write("Patient ID: "); //temporary
             int inPatientID = int.Parse(Console.ReadLine());
             Console.Write("Name: ");
             string inName = Console.ReadLine();
@@ -155,6 +157,7 @@ class MenuManager
                     case 3:
                         managingPatient = false;
                         break;
+                    //default
                 }
             }
         }
@@ -166,7 +169,10 @@ class MenuManager
         {
             Console.Clear();
             Console.WriteLine("Choose Record:");
-            Console.WriteLine("1. Checkup Record\n2. Vaccine Record\n3. Surgery Record");
+            Console.WriteLine("1. Checkup Record");
+            Console.WriteLine("2. Vaccine Record");
+            Console.WriteLine("3. Surgery Record");
+            Console.WriteLine("4. Back");
 
             int choice = int.Parse(Console.ReadLine());
 
@@ -175,8 +181,8 @@ class MenuManager
                 case 1: 
                 {
                     Console.Clear();
-                    Console.WriteLine("Enter record information:");
-                    Console.Write("ID: "); //temporary
+                    Console.WriteLine("Enter Check-up record information:");
+                    Console.Write("Record ID: "); //temporary
                     int inRecordID = Convert.ToInt16(Console.ReadLine());
                     Console.Write("Date: ");
                     string inDate = Console.ReadLine();
@@ -200,8 +206,8 @@ class MenuManager
                 case 2: 
                 {
                     Console.Clear();
-                    Console.WriteLine("Enter record information:");
-                    Console.Write("ID: "); //temporary
+                    Console.WriteLine("Enter Vaccination record information:");
+                    Console.Write("Record ID: "); //temporary
                     int inRecordID = Convert.ToInt16(Console.ReadLine());
                     Console.Write("Date: ");
                     string inDate = Console.ReadLine();
@@ -225,7 +231,33 @@ class MenuManager
                     break;
                 }
                 case 3:
+                {
+                        Console.Clear();
+                        Console.WriteLine("Enter Surgery record information:");
+                        Console.Write("Record ID: "); //temporary
+                        int inRecordID = Convert.ToInt16(Console.ReadLine());
+                        Console.Write("Date: ");
+                        string inDate = Console.ReadLine();
+                        Console.Write("Procedure name: ");
+                        string inProc = Console.ReadLine();
+                        Console.Write("Recovery Status: ");
+                        string inRecStat = Console.ReadLine();
+                        Console.Write("Diagnosis: ");
+                        string inDiag = Console.ReadLine();
+                        Console.Write("Notes (200 characters): ");
+                        string inNotes = Console.ReadLine();
+
+                        SurgeryRecord surgery = new SurgeryRecord(inRecordID, inDate, inDiag, inNotes, inProc, inRecStat);
+
+                        patientManager.AddMedicalRecord(patient, surgery);
+
+                        Console.WriteLine($"Record added successfully!");
+                        Console.ReadKey();
+                        break;
+                }
+                case 4:
                     return;
+                //default
             }
         }
     }

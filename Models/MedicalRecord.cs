@@ -3,7 +3,7 @@
 using System;
 
 abstract class MedicalRecord {
-    private int RecordID; //make it automatic
+    private int RecordID; //make it automatic, make it string (C00123, V00123, S00123)
     private string Date;
     private string Diagnosis;
     private string Notes;

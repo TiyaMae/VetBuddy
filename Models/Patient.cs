@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 
 class Patient {
-    private int PatientID; //make patientID automatic
+    private int PatientID; //make patientID automatic, make string(P00123)
     private string Name;
     private int Age;
     private string Species;
