@@ -3,6 +3,7 @@ using System;
 class CheckupRecord : MedicalRecord {
     private double Weight; //kg
     private double Temperature; //celsius
+    private string CheckupRecID= "C000000";
 
     public CheckupRecord (int _recid, string _date, string _diag, string _notes, double _weight, double _temp) 
     :base(_recid, _date, _diag, _notes) {
@@ -24,6 +25,8 @@ class CheckupRecord : MedicalRecord {
             else throw new ArgumentException("Error!");
         }
     }
+
+    public override RecordType recordType => RecordType.Checkup;
 
     public override void DisplayRecord()
     { //make parent print inherited information

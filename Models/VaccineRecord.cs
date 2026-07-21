@@ -36,18 +36,19 @@ class VaccineRecord : MedicalRecord {
         }
     }
 
+    public override RecordType recordType => RecordType.Vaccine;
+
     public override void DisplayRecord()
     { //make parent print inherited information
         LoginManager vet = new LoginManager();
 
-        Console.WriteLine("====== CHECK UP RECORD =====");
+        Console.WriteLine("====== VACCINE RECORD =====");
         Console.WriteLine($"Record ID: {recordID}"); //temporary
         Console.WriteLine($"Date: {date}");
         Console.WriteLine($"Vet: {vet.vetName}");
         Console.WriteLine($"Vaccine name: {vaccname}");
         Console.WriteLine($"Dose: {dose}");
         Console.WriteLine($"Next due date: {nextdue}");
-        Console.WriteLine($"Diagnosis: "); //remove
         Console.WriteLine($"Notes (200 characters): {notes}");
     }
 }

@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Collections;
+using System.ComponentModel.DataAnnotations;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 class MenuManager
@@ -69,34 +70,7 @@ class MenuManager
         }
     }
 
-    public void AddPatientMenu()
-    {
-        while (true)    
-        {
-            Console.Clear();
-            Console.WriteLine("Enter patient information:");
-            Console.Write("Patient ID: "); //temporary
-            int inPatientID = int.Parse(Console.ReadLine());
-            Console.Write("Name: ");
-            string inName = Console.ReadLine();
-            Console.Write("Age: ");
-            int inAge = int.Parse(Console.ReadLine());
-            Console.Write("Species: ");
-            string inSpec = Console.ReadLine();
-            Console.Write("Breed: ");
-            string inBreed = Console.ReadLine();
-            Console.Write("Gender: ");
-            string inGen = Console.ReadLine();
-            Console.Write("Status: ");
-            string inStat = Console.ReadLine();
-
-            Patient newPatient = patientManager.AddPatient(inPatientID, inName, inAge, inSpec, inBreed, inGen, inStat);
-
-            Console.WriteLine($"Patient added successfully!");
-            Console.ReadKey();
-            return;
-        }
-    }
+    //------------- PATIENT ------------
 
     public void PatientMenu()
     {
@@ -136,25 +110,48 @@ class MenuManager
                 Console.Clear();
 
                 Console.WriteLine($"Patient: {patient.name}");
+                Console.WriteLine($"Age: {patient.age}");
+                Console.WriteLine($"Species: {patient.species}");
+                Console.WriteLine($"Breed: {patient.breed}");
+                Console.WriteLine($"Gender: {patient.gender}");
+                Console.WriteLine($"Status: {patient.status}");
                 Console.WriteLine("-------------------------");
-                Console.WriteLine("1. Add Medical Record");
-                Console.WriteLine("2. View Medical Records");
-                Console.WriteLine("3. Back");
+                Console.WriteLine("1. Edit Patient");
+                Console.WriteLine("2. Delete Patient");
+                Console.WriteLine("3. Add Medical Records");
+                Console.WriteLine("4. View Medical Records");
+                Console.WriteLine("5. Back");
 
                 int choice = int.Parse(Console.ReadLine());
 
                 switch (choice)
                 {
                     case 1:
-                        AddMedicalRecordMenu(patient);
+                        EditPatientMenu(patient);
                         break;
 
                     case 2:
-                        patientManager.DisplayMedicalRecordList(patient);
-                        Console.ReadKey();
+                        Console.Clear();
+                        if (patientManager.DeletePatient(patient.patientid))
+                        {
+                            fileManager.SavePatients(patientManager.patients);
+                            fileManager.SaveRecords(patientManager.patients);
+                            Console.WriteLine("Patient deleted successfully.");
+                        }   else
+                        {
+                            Console.WriteLine("Error.");
+                            Console.ReadKey();
+                        }
+                        break;
+                    case 3:
+                        AddRecordMenu(patient);
                         break;
 
-                    case 3:
+                    case 4:
+                        MedicalRecordMenu(patient);
+                        break;
+
+                    case 5:
                         managingPatient = false;
                         break;
                     //default
@@ -163,7 +160,73 @@ class MenuManager
         }
     }
 
-    public void AddMedicalRecordMenu(Patient patient)
+    public void AddPatientMenu()
+    {
+        while (true)    
+        {
+            Console.Clear();
+            Console.WriteLine("Enter patient information:");
+            Console.Write("Patient ID: "); //temporary
+            int inPatientID = int.Parse(Console.ReadLine());
+            Console.Write("Name: ");
+            string inName = Console.ReadLine();
+            Console.Write("Age: ");
+            int inAge = int.Parse(Console.ReadLine());
+            Console.Write("Species: ");
+            string inSpec = Console.ReadLine();
+            Console.Write("Breed: ");
+            string inBreed = Console.ReadLine();
+            Console.Write("Gender: ");
+            string inGen = Console.ReadLine();
+            Console.Write("Status: ");
+            string inStat = Console.ReadLine();
+
+            Patient newPatient = patientManager.AddPatient(inPatientID, inName, inAge, inSpec, inBreed, inGen, inStat);
+            fileManager.SavePatients(patientManager.patients);
+
+            Console.WriteLine($"Patient added successfully!");
+            Console.ReadKey();
+            return;
+        }
+    }
+
+    public void EditPatientMenu(Patient patient)
+    {
+        Console.Clear();
+
+        Console.WriteLine("=== Edit Patient ===");
+
+        Console.Write($"Name ({patient.name}): ");
+        string name = Console.ReadLine();
+
+        Console.Write($"Age ({patient.age}): ");
+        int age = int.Parse(Console.ReadLine());
+
+        Console.Write($"Species ({patient.species}): ");
+        string species = Console.ReadLine();
+
+        Console.Write($"Breed ({patient.breed}): ");
+        string breed = Console.ReadLine();
+
+        Console.Write($"Gender ({patient.gender}): ");
+        string gender = Console.ReadLine();
+
+        Console.Write($"Status ({patient.status}): ");
+        string status = Console.ReadLine();
+
+        patientManager.EditPatient(patient,
+            name, age, species, breed, gender, status);
+
+        fileManager.SavePatients(patientManager.patients);
+
+        Console.WriteLine("Patient updated!");
+        Console.ReadKey();
+        return;
+    }
+
+    //------------- MEDICAL RECORD -------------
+
+    public void AddRecordMenu(Patient patient)
     {
         while (true)
         {
@@ -197,7 +260,8 @@ class MenuManager
 
                     CheckupRecord checkup = new CheckupRecord(inRecordID, inDate, inDiag, inNotes, inWeight, inTemp);
 
-                    patientManager.AddMedicalRecord(patient, checkup);
+                    patientManager.AddRecord(patient, checkup);
+                    fileManager.SaveRecords(patientManager.patients);
 
                     Console.WriteLine($"Record added successfully!");
                     Console.ReadKey();
@@ -224,7 +288,8 @@ class MenuManager
 
                     VaccineRecord vaccine = new VaccineRecord(inRecordID, inDate, inDiag, inNotes, invaccName, inDose, inNextDue);
 
-                    patientManager.AddMedicalRecord(patient, vaccine);
+                    patientManager.AddRecord(patient, vaccine);
+                    fileManager.SaveRecords(patientManager.patients);
 
                     Console.WriteLine($"Record added successfully!");
                     Console.ReadKey();
@@ -249,7 +314,8 @@ class MenuManager
 
                         SurgeryRecord surgery = new SurgeryRecord(inRecordID, inDate, inDiag, inNotes, inProc, inRecStat);
 
-                        patientManager.AddMedicalRecord(patient, surgery);
+                        patientManager.AddRecord(patient, surgery);
+                        fileManager.SaveRecords(patientManager.patients);
 
                         Console.WriteLine($"Record added successfully!");
                         Console.ReadKey();
@@ -258,6 +324,71 @@ class MenuManager
                 case 4:
                     return;
                 //default
+            }
+        }
+    }
+
+    public void MedicalRecordMenu(Patient patient)
+    {
+        while(true)
+        {
+            Console.Clear();
+
+            patientManager.DisplayRecordList(patient);
+
+            Console.WriteLine();
+            Console.Write("Enter Record ID (0 to go back): ");
+
+            int id = int.Parse(Console.ReadLine());
+
+            if (id == 0)
+                return;
+
+            MedicalRecord record = patientManager.GetRecordByID(patient, id);
+
+            if (record == null)
+            {
+                Console.WriteLine("Record not found.");
+                Console.ReadKey();
+                continue;
+            }
+
+            bool managingRecord = true;
+
+            while (managingRecord)
+            {
+                Console.Clear();
+                record.DisplayRecord();
+                
+                Console.WriteLine("-------------------------");
+                Console.WriteLine("1. Edit Record");
+                Console.WriteLine("2. Delete Record");
+                Console.WriteLine("3. Back");
+
+                int choice = int.Parse(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        //EditRecord(patient, record);
+                        break;
+                    case 2:
+                        Console.Clear();
+                        if (patientManager.DeleteRecord(patient, record.recordID))
+                        {
+                            fileManager.SaveRecords(patientManager.patients);
+                            Console.WriteLine("Patient deleted successfully.");
+                            Console.ReadKey();
+                        }   else
+                        {
+                            Console.WriteLine("Error.");
+                            Console.ReadKey();
+                        }
+                        break;
+                    case 3:
+                        return;
+                    //default
+                }
             }
         }
     }

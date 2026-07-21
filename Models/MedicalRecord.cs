@@ -2,17 +2,27 @@
 
 using System;
 
-abstract class MedicalRecord {
+public enum RecordType
+{
+    Checkup,
+    Vaccine,
+    Surgery
+}
+
+abstract class MedicalRecord 
+{
     private int RecordID; //make it automatic, make it string (C00123, V00123, S00123)
     private string Date;
     private string Diagnosis;
     private string Notes;
 
-    public MedicalRecord (int _recid,string _date, string _diag,string _notes) {
+    public MedicalRecord (int _recid,string _date, string _diag,string _notes) 
+    {
         recordID = _recid; date = _date; diagnosis = _diag; notes = _notes;
     }
 
-    public int recordID {
+    public int recordID 
+    {
         get {return RecordID;}
         set {
             if (value>=1) RecordID = value;
@@ -20,7 +30,8 @@ abstract class MedicalRecord {
         }
     }
 
-    public string date {
+    public string date 
+    {
         get {return Date;}
         set {
             if (!string.IsNullOrWhiteSpace(value) && value.Length <= 13) Date = value;
@@ -28,7 +39,8 @@ abstract class MedicalRecord {
         }
     }
 
-    public string diagnosis {
+    public string diagnosis 
+    {
         get {return Diagnosis;}
         set {
             if (!string.IsNullOrWhiteSpace(value) && value.Length <= 20) Diagnosis = value;
@@ -36,7 +48,8 @@ abstract class MedicalRecord {
         }
     }
 
-    public string notes {
+    public string notes 
+    {
         get {return Notes;}
         set {
             if (!string.IsNullOrWhiteSpace(value) && value.Length <= 200) Notes = value;
@@ -44,5 +57,9 @@ abstract class MedicalRecord {
         }
     }
 
+    public abstract RecordType recordType
+    {
+        get;
+    }
     public abstract void DisplayRecord();
 }
