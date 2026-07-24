@@ -35,7 +35,7 @@ class CheckupRecord : MedicalRecord {
         Console.WriteLine("====== CHECK UP RECORD =====");
         Console.WriteLine($"Record ID: {recordID}"); //temporary
         Console.WriteLine($"Date: {date}");
-        Console.WriteLine($"Vet: {vet.vetName}");
+        Console.WriteLine($"Vet: Dr. {vet.vetName}");
         Console.WriteLine($"Weight: {weight} kg");
         Console.WriteLine($"Temperature: {temp} °C");
         Console.WriteLine($"Diagnosis: {diagnosis}");
