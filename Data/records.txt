@@ -1,5 +1,1 @@
-P0001,Checkup,C0001,2026-07-24,24,30,None,None
-P0001,Vaccine,V0001,2026-07-24,Anti rabies,12mL,7-29-26,none,none
-P0001,Surgery,S0001,2026-07-24,Amputation,Recovering,none,none
-P0001,Vaccine,V0002,2026-07-24,Anti rabies,12mL,7-29-26,none,none
-P0001,Checkup,C0002,2026-07-24,40,38,None,none
+
