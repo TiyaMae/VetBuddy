@@ -37,7 +37,7 @@ class SurgeryRecord : MedicalRecord {
         Console.WriteLine("====== SURGERY RECORD =====");
         Console.WriteLine($"ID: {recordID}"); //temporary
         Console.WriteLine($"Date: {date}");
-        Console.WriteLine($"Vet: {vet.vetName}");
+        Console.WriteLine($"Vet: Dr. {vet.vetName}");
         Console.WriteLine($"Procedure: {procedure}");
         Console.WriteLine($"Recovery status: {recstatus}");
         Console.WriteLine($"Notes (200 characters): ");
