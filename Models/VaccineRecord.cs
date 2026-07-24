@@ -46,7 +46,7 @@ class VaccineRecord : MedicalRecord {
         Console.WriteLine("====== VACCINE RECORD =====");
         Console.WriteLine($"Record ID: {recordID}"); //temporary
         Console.WriteLine($"Date: {date}");
-        Console.WriteLine($"Vet: {vet.vetName}");
+        Console.WriteLine($"Vet: Dr. {vet.vetName}");
         Console.WriteLine($"Vaccine name: {vaccname}");
         Console.WriteLine($"Dose: {dose}");
         Console.WriteLine($"Next due date: {nextdue}");
