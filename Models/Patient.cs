@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 
 class Patient {
-    private int PatientID; //make patientID automatic, make string(P00123)
+    private string PatientID; //make patientID automatic, make string(P00123)
     private string Name;
     private int Age;
     private string Species;
@@ -13,18 +13,19 @@ class Patient {
     private string Status; //make status automatic
     private List<MedicalRecord> MedicalRecords = new List<MedicalRecord>();
 
-    string[] StatusType = {"Healthy", "Sick", "Recovering", "Medicated", "Qued"};
-
-    public Patient(int _patientid, string _name, int _age, string _species, string _breed, string _gender, string _status)
+    public Patient(string _patientid, string _name, int _age, string _species, string _breed, string _gender, string _status)
     {
         patientid = _patientid; name = _name; age = _age; species = _species; breed = _breed; gender = _gender; status = _status;
     }
 
-    public int patientid {
+    public string patientid {
         get {return PatientID;}
-        set {
-            if (value>=1) PatientID = value;
-            else throw new ArgumentException("Error oi!");
+        set
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+                PatientID = value;
+            else
+                throw new ArgumentException("Patient ID cannot be empty.");
         }
     }
 
@@ -32,15 +33,15 @@ class Patient {
         get {return Name;}
         set {
             if (!string.IsNullOrWhiteSpace(value) && value.Length <= 20) Name = value;
-            else throw new ArgumentException("Error oi!");
+            else throw new ArgumentException("Name is empty or too long.");
         }
     }
 
     public int age {
         get {return Age;}
         set {
-            if (value>=1 && value<=150) Age = value;
-            else throw new ArgumentException("Error oi!");
+            if (value>=0.01 && value<=150) Age = value;
+            else throw new ArgumentException("Age must be between 0.01 and 150 years.");
         }
     }
 
@@ -48,7 +49,7 @@ class Patient {
         get {return Species;}
         set {
             if (!string.IsNullOrWhiteSpace(value) && value.Length <= 20) Species = value;
-            else throw new ArgumentException("Error oi!");
+            else throw new ArgumentException("Species is empty or too long.");
         }
     }
 
@@ -56,7 +57,7 @@ class Patient {
         get {return Breed;}
         set {
             if (!string.IsNullOrWhiteSpace(value) && value.Length <= 20) Breed = value;
-            else throw new ArgumentException("Error oi!");
+            else throw new ArgumentException("Breed is empty or too long.");
         }
     }
 
@@ -64,7 +65,7 @@ class Patient {
         get {return Gender;}
         set {
             if (!string.IsNullOrWhiteSpace(value) && value.Length <= 20) Gender = value;
-            else throw new ArgumentException("Error oi!");
+            else throw new ArgumentException("Gender is is empty or too long.");
         }
     }
 
@@ -73,7 +74,7 @@ class Patient {
         get {return Status;}
         set {
             if (!string.IsNullOrWhiteSpace(value) && value.Length <= 20) Status = value;
-            else throw new ArgumentException("Error oi!");
+            else throw new ArgumentException("Status is empty or too long.");
         }
     }
 

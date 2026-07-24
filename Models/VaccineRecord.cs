@@ -5,9 +5,9 @@ using System;
 class VaccineRecord : MedicalRecord {
     private string VaccName;
     private string Dose;
-    private string NextDue; //add vaccine reminders
+    private string NextDue;
 
-    public VaccineRecord (int _recid,string _date, string _diag,string _notes,string _vaccname,string _dose,string _nextdue) 
+    public VaccineRecord (string _recid, string _date, string _diag, string _notes, string _vaccname, string _dose, string _nextdue) 
     : base( _recid, _date, _diag, _notes) {
         vaccname = _vaccname; dose = _dose; nextdue = _nextdue;
     }
@@ -16,7 +16,7 @@ class VaccineRecord : MedicalRecord {
         get {return VaccName;}
         set {
             if (!string.IsNullOrWhiteSpace(value) && value.Length <= 20) VaccName = value;
-            else throw new ArgumentException("Error oi!");
+            else throw new ArgumentException("Vaccine name is empty or too long.");
         }
     }
 
@@ -24,7 +24,7 @@ class VaccineRecord : MedicalRecord {
         get {return Dose;}
         set {
             if (!string.IsNullOrWhiteSpace(value) && value.Length <= 20) Dose = value;
-            else throw new ArgumentException("Error oi!");
+            else throw new ArgumentException("Dose is is empty or too long.");
         }
     }
 
@@ -32,7 +32,7 @@ class VaccineRecord : MedicalRecord {
         get {return NextDue;}
         set {
             if (!string.IsNullOrWhiteSpace(value) && value.Length <= 20) NextDue = value;
-            else throw new ArgumentException("Error oi!");
+            else throw new ArgumentException("Next due date is empty or too long.");
         }
     }
 
@@ -41,6 +41,7 @@ class VaccineRecord : MedicalRecord {
     public override void DisplayRecord()
     { //make parent print inherited information
         LoginManager vet = new LoginManager();
+        vet.LoadAccount();
 
         Console.WriteLine("====== VACCINE RECORD =====");
         Console.WriteLine($"Record ID: {recordID}"); //temporary

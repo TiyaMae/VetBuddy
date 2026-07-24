@@ -6,7 +6,7 @@ class SurgeryRecord : MedicalRecord {
     private string Procedure;
     private string RecoveryStatus;
 
-    public SurgeryRecord (int _recid,string _date,string _diag,string _notes,string _procedure,string _recstatus)
+    public SurgeryRecord (string _recid, string _date, string _diag, string _notes, string _procedure, string _recstatus)
     : base( _recid, _date, _diag, _notes) {
         procedure = _procedure; recstatus = _recstatus;
     }
@@ -15,7 +15,7 @@ class SurgeryRecord : MedicalRecord {
         get {return Procedure;}
         set {
             if (!string.IsNullOrWhiteSpace(value) && value.Length <= 20) Procedure = value;
-            else throw new ArgumentException("Error oi!");
+            else throw new ArgumentException("Procedure is empty or too long.");
         }
     }
 
@@ -23,15 +23,16 @@ class SurgeryRecord : MedicalRecord {
         get {return RecoveryStatus;}
         set {
             if (!string.IsNullOrWhiteSpace(value) && value.Length <= 20) RecoveryStatus = value;
-            else throw new ArgumentException("Error oi!");
+            else throw new ArgumentException("Recovery status is empty or too long.");
         }
     }
 
     public override RecordType recordType => RecordType.Surgery;
-
+ 
     public override void DisplayRecord() 
     { //make parent print inherited information
         LoginManager vet = new LoginManager();
+        vet.LoadAccount();
 
         Console.WriteLine("====== SURGERY RECORD =====");
         Console.WriteLine($"ID: {recordID}"); //temporary

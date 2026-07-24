@@ -1,14 +1,48 @@
 #nullable disable
 
-using System.Diagnostics;
-
 class LoginManager
 {
-    private string Email = "doc@gmail.com";
-    private string Password = "zorro123";
-    private string VetName = "Johnrode";
+    private string Email;
+    private string Password;
+    private string VetName;
 
-    public  string email
+    public void LoadAccount()
+    {
+        if (!File.Exists("Data\\account.txt"))
+        {
+            Console.WriteLine("account.txt not found");
+            Console.ReadKey();
+            return;
+        }
+
+        try
+        {
+            using (StreamReader reader = new StreamReader("Data\\account.txt"))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(line)) continue;
+
+                    string[] data = line.Split(',');
+
+                    if (data.Length<3) continue;
+
+                    Email = data[0];
+                    Password = data[1];
+                    VetName = data[2];
+                }
+            }
+        }
+        catch (IOException)
+        {
+            Console.WriteLine("Unable to read file.");
+            Console.ReadKey();
+        }
+    }
+
+    public string email
     {
         get {return Email;}
     }
@@ -25,6 +59,7 @@ class LoginManager
 
     public bool LoginAuth(string _email,string _pass)
     {
+        LoadAccount();
         return _email==Email && _pass==Password;
     }
 }

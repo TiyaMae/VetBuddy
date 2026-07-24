@@ -32,7 +32,7 @@ class PatientManager {
         }
     }
 
-    public Patient GetPatientByID(int id)
+    public Patient GetPatientByID(string id)
     {
         foreach (Patient patient in Patients)
         {
@@ -44,16 +44,19 @@ class PatientManager {
 
     public Patient SearchPatient()
     {
-        Console.WriteLine();
-            Console.Write("Search for patient (0 to go back): ");
+        int age;
 
-            string input = Console.ReadLine();
+        Console.WriteLine();
+        Console.Write("Search for patient (0 to go back): ");
+
+        string input = Console.ReadLine();
+        bool isAge = int.TryParse(input, out age);
 
             foreach (Patient patient in Patients)
         {
-            if (patient.patientid == int.Parse(input)) return patient;
+            if (patient.patientid == input) return patient;
             else if (patient.name == input) return patient;
-            else if (patient.age == int.Parse(input)) return patient;
+            else if (isAge && patient.age == age) return patient;
             else if (patient.species == input) return patient;
             else if (patient.breed == input) return patient;
             else if (patient.gender == input) return patient;
@@ -63,20 +66,20 @@ class PatientManager {
         return null;
     }
 
-    public Patient AddPatient(int _patientid, string _name, int _age, string _species, string _breed, string _gender, string _status) {
+    public Patient AddPatient(string _patientid, string _name, int _age, string _species, string _breed, string _gender, string _status) {
         Patient newPatient = new Patient(_patientid, _name, _age, _species, _breed, _gender, _status);
         Patients.Add(newPatient);
         return newPatient;
     }
 
-    public bool DeletePatient(int id) {
+    public bool DeletePatient(string id) {
        Patient patient = GetPatientByID(id);
 
-       if (patient == null) return true;
+       if (patient == null) return false;
 
         Patients.Remove(patient);
 
-        return false;
+        return true;
     }
 
     public bool EditPatient(Patient patient, string name, int age, string species, string breed, string gender, string status) {
@@ -114,7 +117,7 @@ class PatientManager {
         }
     }
 
-    public MedicalRecord GetRecordByID(Patient patient, int id)
+    public MedicalRecord GetRecordByID(Patient patient, string id)
     {
         foreach (MedicalRecord record in patient.medicalRecords)
         {
@@ -128,16 +131,12 @@ class PatientManager {
         patient.medicalRecords.Add(record);
     }
 
-    public bool DeleteRecord(Patient patient, int recordid) {
+    public bool DeleteRecord(Patient patient, string recordid) {
         MedicalRecord record = patient.medicalRecords.Find(r => r.recordID == recordid);
 
         if (record == null) return false;
 
         patient.medicalRecords.Remove(record);
         return true;
-    }
-
-    public void EditPRecord() {
-        //code for editing patients
     }
 }
