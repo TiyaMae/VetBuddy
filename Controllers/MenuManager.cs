@@ -54,7 +54,7 @@ class MenuManager
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("1. Add Patient\n2. display patient\n3. opt 3");
+            Console.WriteLine("1. Add Patient\n2. display patient\n3. Exit");
 
             int choice = 0;
                 try 
